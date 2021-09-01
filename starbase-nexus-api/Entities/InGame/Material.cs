@@ -17,10 +17,6 @@ namespace starbase_nexus_api.Entities.InGame
         [MaxLength(InputSizes.DEFAULT_TEXT_MAX_LENGTH)]
         public string Name { get; set; }
 
-        [MinLength(InputSizes.DEFAULT_TEXT_MIN_LENGTH)]
-        [MaxLength(InputSizes.DEFAULT_TEXT_MAX_LENGTH)]
-        public string? IconUri { get; set; }
-
         [ForeignKey("MaterialCategoryId")]
         public Guid MaterialCategoryId { get; set; }
         public virtual MaterialCategory MaterialCategory { get; set; }
@@ -53,10 +49,16 @@ namespace starbase_nexus_api.Entities.InGame
         /// </summary>
         public double? OreDensity { get; set; }
 
+        [MinLength(InputSizes.DEFAULT_TEXT_MIN_LENGTH)]
+        [MaxLength(InputSizes.DEFAULT_TEXT_MAX_LENGTH)]
         public string? IconUriRaw { get; set; }
 
+        [MinLength(InputSizes.DEFAULT_TEXT_MIN_LENGTH)]
+        [MaxLength(InputSizes.DEFAULT_TEXT_MAX_LENGTH)]
         public string? IconUriRefined { get; set; }
 
+        [MinLength(InputSizes.DEFAULT_TEXT_MIN_LENGTH)]
+        [MaxLength(InputSizes.DEFAULT_TEXT_MAX_LENGTH)]
         public string? IconUriOreChunk { get; set; }
     }
 }
