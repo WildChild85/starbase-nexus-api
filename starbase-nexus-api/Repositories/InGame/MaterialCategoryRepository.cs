@@ -21,9 +21,9 @@ namespace starbase_nexus_api.Repositories.InGame
             if (parameters.SearchQuery != null && parameters.SearchQuery.Length >= InputSizes.DEFAULT_TEXT_MIN_LENGTH)
             {
                 collection = collection.Where(r =>
-                    r.Name.Contains(parameters.SearchQuery, System.StringComparison.OrdinalIgnoreCase)
+                    r.Name.Contains(parameters.SearchQuery)
                     ||
-                    r.Description.Contains(parameters.SearchQuery, System.StringComparison.OrdinalIgnoreCase)
+                    r.Description.Contains(parameters.SearchQuery)
                 );
             }
 

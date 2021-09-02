@@ -46,10 +46,10 @@ namespace starbase_nexus_api.Controllers.Authentication
         /// </summary>
         [AllowAnonymous]
         [HttpPost]
-        [Route("sign-in-discord")]
+        [Route("discord")]
         public async Task<ActionResult<AuthenticationTokens>> SignInWithDiscord([FromBody] DiscordTokenRequest parameters)
         {
-            string? discordToken = await _discordService.GetAccessToken(parameters.Code, parameters.RedirectUrl);
+            string? discordToken = await _discordService.GetAccessToken(parameters.Code, parameters.RedirectUri);
             DiscordMeResponse? userInfo = await _discordService.GetUserInfo(discordToken);
 
             if (userInfo.id == null)

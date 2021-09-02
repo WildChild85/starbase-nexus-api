@@ -8,6 +8,6 @@ namespace starbase_nexus_api.Models.Authentication.Discord
         public string Code { get; set; }
 
         [Required]
-        public string RedirectUrl { get; set; }
+        public string RedirectUri { get; set; }
     }
 }

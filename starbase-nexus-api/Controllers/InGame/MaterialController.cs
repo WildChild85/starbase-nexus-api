@@ -34,6 +34,7 @@ namespace starbase_nexus_api.Controllers.InGame
         /// </summary>
         [HttpGet]
         [Route("")]
+        [AllowAnonymous]
         public async Task<ActionResult<PagedList<ViewMaterial>>> GetMultiple([FromQuery] MaterialSearchParameters parameters)
         {
             PagedList<Material> entities = await _materialRepository.GetMultiple(parameters);
@@ -47,6 +48,7 @@ namespace starbase_nexus_api.Controllers.InGame
         /// </summary>
         [HttpGet]
         [Route("({ids})")]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<ViewMaterial>>> GetMultiple(
             [FromRoute][ModelBinder(BinderType = typeof(ArrayModelBinder))] IEnumerable<Guid> ids,
             [FromQuery] ShapingParameters parameters
@@ -65,6 +67,7 @@ namespace starbase_nexus_api.Controllers.InGame
         /// </summary>
         [HttpGet]
         [Route("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<ViewMaterial>> GetOne(Guid id, [FromQuery] string? fields)
         {
             Material? entity = await _materialRepository.GetOneOrDefault(id);

@@ -7,7 +7,7 @@
     }
   },
   "ConnectionStrings": {
-    "Mysql8Server": "Server=localhost;Database=starbase_nexus_api;User=root;Password=voxelmatsch;"
+    "Mysql8Server": "Server=localhost;Database=starbase_nexus_api;User=root;Password=your-password;"
   },
   "JWTAuth": {
     "Issuer": "https://localhost:5001",
@@ -20,8 +20,8 @@
     "Uri": "https://localhost:8080"
   },
   "Discord": {
-    "ClientId": "882663877962244146",
-    "ClientSecret": "diqomsb8j85S_ox6M3LlONR_Ltcmu5t8"
-  },
+    "ClientId": "your-discord-client-id",
+    "ClientSecret":  "your-discord-client-secret"
+  }
   "UpdateDatabase": false
 }

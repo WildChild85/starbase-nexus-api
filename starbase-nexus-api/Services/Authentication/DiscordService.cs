@@ -3,19 +3,26 @@ using Newtonsoft.Json;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
 
 namespace starbase_nexus_api.Services.Authentication
 {
     public class DiscordService : IDiscordService
     {
-        private string client_id = "745240031349702719";
-        private string client_secret = "HlGYlkgP_yJVFBhGGXNfuRB8pzP85UpV";
+        private readonly string _clientId;
+        private readonly string _clientSecret;
+
+        public DiscordService(IOptions<DiscordOptions> options)
+        {
+            _clientId = options.Value.ClientId;
+            _clientSecret = options.Value.ClientSecret;
+        }
 
         public async Task<string> GetAccessToken(string code, string redirectUrl)
         {
             HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create("https://discordapp.com/api/oauth2/token");
             webRequest.Method = "POST";
-            string parameters = "client_id=" + client_id + "&client_secret=" + client_secret + "&grant_type=authorization_code&code=" + code + "&redirect_uri=" + redirectUrl + "";
+            string parameters = "client_id=" + _clientId + "&client_secret=" + _clientSecret + "&grant_type=authorization_code&code=" + code + "&redirect_uri=" + redirectUrl + "";
             byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(parameters);
             webRequest.ContentType = "application/x-www-form-urlencoded";
             webRequest.ContentLength = byteArray.Length;

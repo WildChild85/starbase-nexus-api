@@ -20,6 +20,7 @@ using starbase_nexus_api.Entities.Identity;
 using starbase_nexus_api.Entities.InGame;
 using starbase_nexus_api.Filters.Api;
 using starbase_nexus_api.Models.Authentication;
+using starbase_nexus_api.Models.Authentication.Discord;
 using starbase_nexus_api.Models.Pwa;
 using starbase_nexus_api.Repositories.Authentication;
 using starbase_nexus_api.Repositories.Identity;
@@ -140,6 +141,7 @@ namespace starbase_nexus_api
             // register configurations
             services.Configure<JwtTokenOptions>(Configuration.GetSection("JWTAuth"));
             services.Configure<PwaOptions>(Configuration.GetSection("Pwa"));
+            services.Configure<DiscordOptions>(Configuration.GetSection("Discord"));
 
             // repositories
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();

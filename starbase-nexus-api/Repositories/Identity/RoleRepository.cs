@@ -78,7 +78,7 @@ namespace starbase_nexus_api.Repositories.Identity
 
             if (parameters.SearchQuery != null && parameters.SearchQuery.Length >= InputSizes.DEFAULT_TEXT_MIN_LENGTH)
             {
-                collection = collection.Where(r => r.Name.Contains(parameters.SearchQuery, System.StringComparison.OrdinalIgnoreCase));
+                collection = collection.Where(r => r.Name.Contains(parameters.SearchQuery));
             }
 
             collection = collection.ApplySort(parameters.OrderBy);

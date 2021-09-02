@@ -233,7 +233,7 @@ namespace starbase_nexus_api.Controllers.Identity
         /// <summary>
         /// Create admin user and role
         /// </summary>
-        [HttpPatch]
+        [HttpGet]
         [Route("initialize")]
         [AllowAnonymous]
         public async Task<ActionResult> InitializeAdminUserAndRoles()
@@ -243,7 +243,7 @@ namespace starbase_nexus_api.Controllers.Identity
                 Role? role = await _roleRepository.GetOneOrDefaultByMame(roleName);
                 if (role == null)
                 {
-                    role = new Role { Name = RoleConstants.ADMINISTRATOR };
+                    role = new Role { Name = roleName };
                     await _roleRepository.Create(role);
                 }
             }
