@@ -31,21 +31,7 @@ namespace starbase_nexus_api.Models.Identity.User
 
         public string? AvatarUri { get; set; }
 
-        public DateTime? Birthday { get; set; }
-
-        public string? FacebookUserId { get; set; }
-
-        public string? FanOf { get; set; }
-
-        public string FirstName { get; set; }
-
-        public char? Gender { get; set; }
-
-        public string? GoogleUserId { get; set; }
-
-        public string? LastName { get; set; }
-
-        public uint? OldId { get; set; }
+        public string? DiscordId { get; set; }
 
         public virtual List<string> Roles { get; set; } = new List<string>();
     }
