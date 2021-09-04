@@ -22,7 +22,6 @@ namespace starbase_nexus_api.Models.InGame.Item
 
         [Required]
         public Guid? ItemCategoryId { get; set; }
-        [Required]
 
         [MinLength(InputSizes.DEFAULT_TEXT_MIN_LENGTH)]
         [MaxLength(InputSizes.DEFAULT_TEXT_MAX_LENGTH)]
@@ -125,6 +124,11 @@ namespace starbase_nexus_api.Models.InGame.Item
         /// per/s
         /// </summary>
         public float? ProjectileLifetime { get; set; }
+
+        /// <summary>
+        /// in seconds
+        /// </summary>
+        public float? WarmupTime { get; set; }
 
         public float? ResearchPointsCube { get; set; }
 

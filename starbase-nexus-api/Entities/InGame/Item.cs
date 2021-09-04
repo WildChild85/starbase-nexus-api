@@ -10,7 +10,7 @@ namespace starbase_nexus_api.Entities.InGame
         [Required]
         [MinLength(InputSizes.MULTILINE_TEXT_MIN_LENGTH)]
         [MaxLength(InputSizes.MULTILINE_TEXT_MAX_LENGTH)]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         [Required]
         [MinLength(InputSizes.DEFAULT_TEXT_MIN_LENGTH)]
@@ -130,6 +130,11 @@ namespace starbase_nexus_api.Entities.InGame
         /// per/s
         /// </summary>
         public float? ProjectileLifetime { get; set; }
+
+        /// <summary>
+        /// in seconds
+        /// </summary>
+        public float? WarmupTime { get; set; }
 
         public float? ResearchPointsCube { get; set; }
 

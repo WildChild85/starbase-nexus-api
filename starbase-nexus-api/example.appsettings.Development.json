@@ -13,7 +13,7 @@
     "Issuer": "https://localhost:5001",
     "Audience": "https://localhost:5001",
     "Key": "0p8mnuwv4t08nuq4t08pnuqv3t4m0p8u34tvvpmt3805z4",
-    "BearerTTL": "30",
+    "BearerTTL": "1",
     "RefreshTTL": "14"
   },
   "Pwa": {

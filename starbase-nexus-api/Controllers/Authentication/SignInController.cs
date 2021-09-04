@@ -75,6 +75,10 @@ namespace starbase_nexus_api.Controllers.Authentication
                 {
                     return BadRequest(resultCreate.Errors);
                 }
+
+                string token = await _userRepository.GetEmailConfirmationToken(user);
+                await _userRepository.ConfirmEmail(user, token);
+                await _userRepository.SetUserLockout(user, false);
             }
 
             user = await _userRepository.GetOneOrDefault(user.Id);

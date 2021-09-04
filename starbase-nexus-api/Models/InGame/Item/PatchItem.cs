@@ -122,6 +122,11 @@ namespace starbase_nexus_api.Models.InGame.Item
         /// </summary>
         public float? ProjectileLifetime { get; set; }
 
+        /// <summary>
+        /// in seconds
+        /// </summary>
+        public float? WarmupTime { get; set; }
+
         public float? ResearchPointsCube { get; set; }
 
         public float? ResearchPointsPower { get; set; }

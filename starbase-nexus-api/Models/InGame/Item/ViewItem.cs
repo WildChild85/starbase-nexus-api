@@ -2,7 +2,7 @@
 
 namespace starbase_nexus_api.Models.InGame.Item
 {
-    public class ViewItem
+    public class ViewItem : UuidViewModel
     {
         public string Description { get; set; }
 
@@ -111,6 +111,11 @@ namespace starbase_nexus_api.Models.InGame.Item
         /// per/s
         /// </summary>
         public float? ProjectileLifetime { get; set; }
+
+        /// <summary>
+        /// in seconds
+        /// </summary>
+        public float? WarmupTime { get; set; }
 
         public float? ResearchPointsCube { get; set; }
 
