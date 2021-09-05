@@ -21,7 +21,6 @@ namespace starbase_nexus_api
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                        //.UseUrls("http://localhost:6000");
                 });
     }
 }
