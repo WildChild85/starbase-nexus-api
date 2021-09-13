@@ -115,7 +115,6 @@ namespace starbase_nexus_api.Controllers.InGame
         /// </summary>
         [HttpPatch]
         [Route("{id}")]
-        [Authorize(Roles = RoleConstants.ADMIN_OR_MODERATOR)]
         public async Task<ActionResult<ViewYololScript>> Patch(Guid id, [FromBody] JsonPatchDocument<PatchYololScript> patchDocument)
         {
             string? currentUserId = GetCurrentUserId();
@@ -155,7 +154,6 @@ namespace starbase_nexus_api.Controllers.InGame
         /// </summary>
         [HttpDelete]
         [Route("{id}")]
-        [Authorize(Roles = RoleConstants.ADMINISTRATOR)]
         public async Task<ActionResult> Delete(Guid id)
         {
             string? currentUserId = GetCurrentUserId();
