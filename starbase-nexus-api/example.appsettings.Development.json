@@ -21,7 +21,11 @@
   },
   "Discord": {
     "ClientId": "your-discord-client-id",
-    "ClientSecret":  "your-discord-client-secret"
-  }
+    "ClientSecret": "your-discord-client-secret"
+  },
+  "Cdn": {
+    "LocalPath": "C:\\Users\\<username>\\Documents\\GitHub\\starbase-nexus-cdn",
+    "PublicPath": "http://starbase-nexus-cdn.localhost"
+  },
   "UpdateDatabase": false
 }

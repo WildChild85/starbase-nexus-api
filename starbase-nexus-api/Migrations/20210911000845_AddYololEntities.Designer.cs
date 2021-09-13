@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using starbase_nexus_api.DbContexts;
 
 namespace starbase_nexus_api.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    partial class MainDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210911000845_AddYololEntities")]
+    partial class AddYololEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -579,15 +581,12 @@ namespace starbase_nexus_api.Migrations
                         .HasColumnType("int unsigned");
 
                     b.Property<string>("PreviewImageUri")
+                        .IsRequired()
                         .HasMaxLength(50000)
                         .HasColumnType("longtext");
 
                     b.Property<DateTimeOffset?>("UpdatedAt")
                         .HasColumnType("datetime(6)");
-
-                    b.Property<string>("YoutubeVideoUri")
-                        .HasMaxLength(50000)
-                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 

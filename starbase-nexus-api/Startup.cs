@@ -18,14 +18,20 @@ using Newtonsoft.Json.Serialization;
 using starbase_nexus_api.DbContexts;
 using starbase_nexus_api.Entities.Identity;
 using starbase_nexus_api.Entities.InGame;
+using starbase_nexus_api.Entities.Yolol;
 using starbase_nexus_api.Filters.Api;
+using starbase_nexus_api.Hubs;
 using starbase_nexus_api.Models.Authentication;
 using starbase_nexus_api.Models.Authentication.Discord;
+using starbase_nexus_api.Models.Cdn;
 using starbase_nexus_api.Models.Pwa;
 using starbase_nexus_api.Repositories.Authentication;
 using starbase_nexus_api.Repositories.Identity;
 using starbase_nexus_api.Repositories.InGame;
+using starbase_nexus_api.Repositories.Yolol;
 using starbase_nexus_api.Services.Authentication;
+using starbase_nexus_api.Services.Cdn;
+using starbase_nexus_api.Services.Media;
 using System;
 using System.IO;
 using System.Linq;
@@ -143,6 +149,7 @@ namespace starbase_nexus_api
             services.Configure<JwtTokenOptions>(Configuration.GetSection("JWTAuth"));
             services.Configure<PwaOptions>(Configuration.GetSection("Pwa"));
             services.Configure<DiscordOptions>(Configuration.GetSection("Discord"));
+            services.Configure<CdnOptions>(Configuration.GetSection("Cdn"));
 
             // repositories
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
@@ -152,10 +159,14 @@ namespace starbase_nexus_api
             services.AddScoped<IMaterialRepository<Material>, MaterialRepository>();
             services.AddScoped<IItemCategoryRepository<ItemCategory>, ItemCategoryRepository>();
             services.AddScoped<IItemRepository<Item>, ItemRepository>();
+            services.AddScoped<IYololProjectRepository<YololProject>, YololProjectRepository>();
+            services.AddScoped<IYololScriptRepository<YololScript>, YololScriptRepository>();
 
             // services
             services.AddScoped<IAccessTokenService, AccessTokenService>();
             services.AddScoped<IDiscordService, DiscordService>();
+            services.AddScoped<ICdnService, CdnService>();
+            services.AddScoped<IImageService, ImageService>();
 
 
             services.AddSwaggerGen(c =>
@@ -190,6 +201,8 @@ namespace starbase_nexus_api
             services.AddHttpClient();
 
             services.AddControllers();
+
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -262,6 +275,7 @@ namespace starbase_nexus_api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<ViewsHub>("hubs/views");
             });
         }
         private static NewtonsoftJsonPatchInputFormatter GetJsonPatchInputFormatter()
