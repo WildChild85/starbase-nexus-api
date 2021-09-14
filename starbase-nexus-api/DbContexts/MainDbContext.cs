@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using starbase_nexus_api.Entities.InGame;
 using starbase_nexus_api.Entities.Yolol;
+using starbase_nexus_api.Entities.Social;
 
 namespace starbase_nexus_api.DbContexts
 {
@@ -28,6 +29,8 @@ namespace starbase_nexus_api.DbContexts
         public DbSet<Item> InGame_Items { get; set; }
         public DbSet<YololProject> Yolol_YololProjects { get; set; }
         public DbSet<YololScript> Yolol_YololScripts { get; set; }
+
+        public DbSet<Like> Social_Likes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
