@@ -165,6 +165,7 @@ namespace starbase_nexus_api
             services.AddScoped<IYololProjectRepository<YololProject>, YololProjectRepository>();
             services.AddScoped<IYololScriptRepository<YololScript>, YololScriptRepository>();
             services.AddScoped<ILikeRepository<Like>, LikeRepository>();
+            services.AddScoped<ICompanyRepository<Company>, CompanyRepository>();
 
             // services
             services.AddScoped<IAccessTokenService, AccessTokenService>();

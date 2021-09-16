@@ -31,6 +31,7 @@ namespace starbase_nexus_api.DbContexts
         public DbSet<YololScript> Yolol_YololScripts { get; set; }
 
         public DbSet<Like> Social_Likes { get; set; }
+        public DbSet<Company> Social_Companies { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
