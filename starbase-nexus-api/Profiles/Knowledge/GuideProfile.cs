@@ -10,7 +10,7 @@ namespace starbase_nexus_api.Profiles.Knowledge
         {
             CreateMap<Guide, ViewGuide>();
             CreateMap<CreateGuide, Guide>();
-            CreateMap<PatchGuide, Guide>();
+            CreateMap<PatchGuide, Guide>().ReverseMap();
         }
     }
 }
