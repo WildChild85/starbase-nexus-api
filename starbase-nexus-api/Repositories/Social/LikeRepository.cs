@@ -40,6 +40,15 @@ namespace starbase_nexus_api.Repositories.Social
                 }
             }
 
+            if (parameters.GuideIds != null)
+            {
+                List<Guid> guideIds = TextService.GetGuidArray(parameters.GuideIds, ',').ToList();
+                if (guideIds.Count > 0)
+                {
+                    collection = collection.Where(r => r.GuideId != null && guideIds.Contains((Guid)r.GuideId));
+                }
+            }
+
             collection = collection.ApplySort(parameters.OrderBy);
 
             PagedList<Like> pagedList = await PagedList<Like>.Create(collection, parameters.Page, parameters.PageSize);

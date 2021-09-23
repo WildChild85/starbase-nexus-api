@@ -87,17 +87,29 @@ namespace starbase_nexus_api.Controllers.Social
             if (currentUserId == null)
                 return Unauthorized();
 
-            if (createObj.YololProjectId == null /* && createObj.otherId */)
+            if (createObj.YololProjectId == null && createObj.GuideId == null)
             {
                 return BadRequest();
             }
 
-            PagedList<Like> conflicting = await _likeRepository.GetMultiple(new LikeSearchParameters
+            if (createObj.YololProjectId != null && createObj.GuideId != null)
+            {
+                return BadRequest();
+            }
+
+            LikeSearchParameters conflictingSearchParameters = new LikeSearchParameters
             {
                 UserIds = currentUserId,
-                YololProjectIds = createObj.YololProjectId.ToString(),
                 PageSize = 1
-            });
+            };
+
+            if (createObj.YololProjectId != null)
+                conflictingSearchParameters.YololProjectIds = createObj.YololProjectId.ToString();
+
+            if (createObj.GuideId != null)
+                conflictingSearchParameters.GuideIds = createObj.GuideId.ToString();
+
+            PagedList<Like> conflicting = await _likeRepository.GetMultiple(conflictingSearchParameters);
 
             if (conflicting.Count > 0)
             {

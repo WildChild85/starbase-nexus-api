@@ -1,5 +1,6 @@
 ﻿using starbase_nexus_api.Constants;
 using starbase_nexus_api.Entities.Identity;
+using starbase_nexus_api.Entities.Knowledge;
 using starbase_nexus_api.Entities.Yolol;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -17,5 +18,9 @@ namespace starbase_nexus_api.Entities.Social
         [ForeignKey("ProjectYololId")]
         public Guid? YololProjectId { get; set; }
         public virtual YololProject? YololProject { get; set; }
+
+        [ForeignKey("GuideId")]
+        public Guid? GuideId { get; set; }
+        public virtual Guide? Guide { get; set; }
     }
 }

@@ -7,5 +7,7 @@ namespace starbase_nexus_api.Models.Social.Like
         public string UserId { get; set; }
 
         public Guid? YololProjectId { get; set; }
+
+        public Guid? GuideId { get; set; }
     }
 }
