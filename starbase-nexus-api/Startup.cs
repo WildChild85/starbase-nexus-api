@@ -18,6 +18,7 @@ using Newtonsoft.Json.Serialization;
 using starbase_nexus_api.DbContexts;
 using starbase_nexus_api.Entities.Identity;
 using starbase_nexus_api.Entities.InGame;
+using starbase_nexus_api.Entities.Knowledge;
 using starbase_nexus_api.Entities.Social;
 using starbase_nexus_api.Entities.Yolol;
 using starbase_nexus_api.Filters.Api;
@@ -29,6 +30,7 @@ using starbase_nexus_api.Models.Pwa;
 using starbase_nexus_api.Repositories.Authentication;
 using starbase_nexus_api.Repositories.Identity;
 using starbase_nexus_api.Repositories.InGame;
+using starbase_nexus_api.Repositories.Knowledge;
 using starbase_nexus_api.Repositories.Social;
 using starbase_nexus_api.Repositories.Yolol;
 using starbase_nexus_api.Services.Authentication;
@@ -166,6 +168,7 @@ namespace starbase_nexus_api
             services.AddScoped<IYololScriptRepository<YololScript>, YololScriptRepository>();
             services.AddScoped<ILikeRepository<Like>, LikeRepository>();
             services.AddScoped<ICompanyRepository<Company>, CompanyRepository>();
+            services.AddScoped<IGuideRepository<Guide>, GuideRepository>();
 
             // services
             services.AddScoped<IAccessTokenService, AccessTokenService>();

@@ -51,8 +51,4 @@
     </None>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\Knowledge\Guide\" />
-  </ItemGroup>
-
 </Project>

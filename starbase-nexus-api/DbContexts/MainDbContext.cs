@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using starbase_nexus_api.Entities.InGame;
 using starbase_nexus_api.Entities.Yolol;
 using starbase_nexus_api.Entities.Social;
+using starbase_nexus_api.Entities.Knowledge;
 
 namespace starbase_nexus_api.DbContexts
 {
@@ -32,6 +33,7 @@ namespace starbase_nexus_api.DbContexts
 
         public DbSet<Like> Social_Likes { get; set; }
         public DbSet<Company> Social_Companies { get; set; }
+        public DbSet<Guide> Knowledge_Guides { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
