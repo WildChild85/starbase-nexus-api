@@ -60,7 +60,12 @@ namespace starbase_nexus_api.Models.InGame.Item
         /// <summary>
         /// f/s
         /// </summary>
-        public float? FuelInput { get; set; }
+        public float? FuelInputRaw { get; set; }
+
+        /// <summary>
+        /// f/s
+        /// </summary>
+        public float? FuelOutputProcessed { get; set; }
 
         /// <summary>
         /// h/s
@@ -77,6 +82,26 @@ namespace starbase_nexus_api.Models.InGame.Item
         /// h/s
         /// </summary>
         public float? HeatDissipation { get; set; }
+
+        /// <summary>
+        /// Comma separated list of adjacency heat values.
+        /// </summary>
+        public string? AdjacencyHeatValues { get; set; }
+
+        /// <summary>
+        /// c
+        /// </summary>
+        public float? CoolantCapacity { get; set; }
+
+        /// <summary>
+        /// c/s
+        /// </summary>
+        public float? CoolantInput { get; set; }
+
+        /// <summary>
+        /// c/s
+        /// </summary>
+        public float? CoolantOutput { get; set; }
 
         /// <summary>
         /// m/s
