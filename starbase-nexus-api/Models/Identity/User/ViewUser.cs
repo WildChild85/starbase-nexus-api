@@ -33,6 +33,8 @@ namespace starbase_nexus_api.Models.Identity.User
 
         public string? DiscordId { get; set; }
 
+        public string? DiscordDiscriminator { get; set; }
+
         public virtual List<string> Roles { get; set; } = new List<string>();
     }
 }

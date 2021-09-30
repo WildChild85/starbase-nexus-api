@@ -16,6 +16,8 @@ namespace starbase_nexus_api.Entities.Identity
 
         public string DiscordId { get; set; }
 
+        public string? DiscordDiscriminator { get; set; }
+
         public DateTimeOffset? LastLogin { get; set; }
 
         public DateTimeOffset CreatedAt { get; set; }

@@ -66,7 +66,8 @@ namespace starbase_nexus_api.Controllers.Authentication
                     UserName = userInfo.username,
                     Email = $"{userInfo.username.ToLower()}@starbase-nexus.net",
                     AvatarUri = userInfo.avatar != null && userInfo.avatar.Trim().Length > 0 ? $"https://cdn.discordapp.com/avatars/{userInfo.id}/{userInfo.avatar}.png" : null,
-                    DiscordId = userInfo.id
+                    DiscordId = userInfo.id,
+                    DiscordDiscriminator = userInfo.discriminator
                 };
 
                 string password = TextService.GeneratePassword();
@@ -80,16 +81,25 @@ namespace starbase_nexus_api.Controllers.Authentication
                 await _userRepository.ConfirmEmail(user, token);
                 await _userRepository.SetUserLockout(user, false);
             }
+            else
+            {
+                if (user.AvatarUri != userInfo.avatar || user.DiscordDiscriminator != userInfo.discriminator)
+                {
+                    user.AvatarUri = userInfo.avatar != null && userInfo.avatar.Trim().Length > 0 ? $"https://cdn.discordapp.com/avatars/{userInfo.id}/{userInfo.avatar}.png" : null;
+                    user.DiscordDiscriminator = userInfo.discriminator;
+                    await _userRepository.Update(user);
+                }
+            }
 
-            user = await _userRepository.GetOneOrDefault(user.Id);
-            user.LastLogin = DateTime.Now;
-            await _userRepository.Update(user);
+            User loginUser = await _userRepository.GetOneOrDefault(user.Id);
+            loginUser.LastLogin = DateTime.Now;
+            await _userRepository.Update(loginUser);
 
             string ip = HttpContext.Connection.RemoteIpAddress.ToString();
 
-            RefreshToken refreshToken = await _refreshTokenRepository.GetNewRefreshToken(user, ip);
+            RefreshToken refreshToken = await _refreshTokenRepository.GetNewRefreshToken(loginUser, ip);
 
-            return Ok(await GetTokenResponseObject(user, refreshToken));
+            return Ok(await GetTokenResponseObject(loginUser, refreshToken));
         }
 
         /// <summary>
