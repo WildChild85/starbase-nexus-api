@@ -7,9 +7,11 @@ using starbase_nexus_api.Entities.Constructions;
 using starbase_nexus_api.Helpers;
 using starbase_nexus_api.Models.Api;
 using starbase_nexus_api.Models.Constructions.Ship;
+using starbase_nexus_api.Models.Constructions.ShipRoleReference;
 using starbase_nexus_api.Repositories.Constructions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace starbase_nexus_api.Controllers.Social
@@ -18,14 +20,17 @@ namespace starbase_nexus_api.Controllers.Social
     public class ShipController : DefaultControllerTemplate
     {
         private readonly IShipRepository<Ship> _shipRepository;
+        private readonly IShipRoleReferenceRepository<ShipRoleReference> _shipRoleReferenceRepository;
         private readonly IMapper _mapper;
 
         public ShipController(
             IShipRepository<Ship> shipRepository,
+            IShipRoleReferenceRepository<ShipRoleReference> shipRoleReferenceRepository,
             IMapper mapper
         )
         {
             _shipRepository = shipRepository;
+            _shipRoleReferenceRepository = shipRoleReferenceRepository;
             _mapper = mapper;
         }
 
@@ -95,6 +100,8 @@ namespace starbase_nexus_api.Controllers.Social
 
             newEntity = await _shipRepository.Create(newEntity);
 
+            await PatchShipRoles(newEntity, createObj.ShipRoleIds);
+
             return Ok(_mapper.Map<ViewShip>(newEntity));
         }
 
@@ -133,6 +140,8 @@ namespace starbase_nexus_api.Controllers.Social
 
             _mapper.Map(patchObj, entity);
             await _shipRepository.Update(entity);
+
+            await PatchShipRoles(entity, patchObj.ShipRoleIds);
 
             return Ok(_mapper.Map<ViewShip>(entity));
         }
@@ -185,9 +194,41 @@ namespace starbase_nexus_api.Controllers.Social
                 }
             }
 
+            await _shipRoleReferenceRepository.DeleteRange(entity.ShipRoles);
+
             await _shipRepository.Delete(entity);
 
             return Ok();
+        }
+
+        private async Task PatchShipRoles(Ship ship, IEnumerable<Guid> shipRoleIds)
+        {
+            PagedList<ShipRoleReference> existing = await _shipRoleReferenceRepository.GetMultiple(
+                new ShipRoleReferenceSearchParameters
+                {
+                    ShipIds = ship.Id.ToString(),
+                    PageSize = -1
+                }
+            );
+            var existingShipRoleIds = from reference in existing select reference.ShipRoleId;
+
+            IEnumerable<ShipRoleReference> toDelete = existing.Where(r => !shipRoleIds.Contains(r.Id));
+            IEnumerable<Guid> toCreateIds = shipRoleIds.Where(shipRoleId => !existingShipRoleIds.Contains(shipRoleId));
+            List<ShipRoleReference> toCreate = new List<ShipRoleReference>();
+
+            foreach(var toCreateId in toCreateIds)
+            {
+                toCreate.Add(
+                    new ShipRoleReference
+                    {
+                        ShipId = ship.Id,
+                        ShipRoleId = toCreateId
+                    }
+                );
+            }
+
+            await _shipRoleReferenceRepository.DeleteRange(toDelete);
+            await _shipRoleReferenceRepository.CreateRange(toCreate);
         }
     }
 }

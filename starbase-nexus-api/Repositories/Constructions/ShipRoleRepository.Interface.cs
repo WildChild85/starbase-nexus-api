@@ -2,7 +2,7 @@
 
 namespace starbase_nexus_api.Repositories.Constructions
 {
-    public interface IShipClassRepository<EntityType> : IUuidBaseRepository<EntityType> where EntityType : ShipClass
+    public interface IShipRoleRepository<EntityType> : IUuidBaseRepository<EntityType> where EntityType : ShipRole
     {
     }
 }

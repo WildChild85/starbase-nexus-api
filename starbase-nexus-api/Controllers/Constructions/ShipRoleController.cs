@@ -6,7 +6,7 @@ using starbase_nexus_api.Constants.Identity;
 using starbase_nexus_api.Entities.Constructions;
 using starbase_nexus_api.Helpers;
 using starbase_nexus_api.Models.Api;
-using starbase_nexus_api.Models.Constructions.ShipClass;
+using starbase_nexus_api.Models.Constructions.ShipRole;
 using starbase_nexus_api.Repositories.Constructions;
 using System;
 using System.Collections.Generic;
@@ -15,17 +15,17 @@ using System.Threading.Tasks;
 namespace starbase_nexus_api.Controllers.Constructions
 {
     [Route("constructions/[controller]")]
-    public class ShipClassController : DefaultControllerTemplate
+    public class ShipRoleController : DefaultControllerTemplate
     {
-        private readonly IShipClassRepository<ShipClass> _shipClassRepository;
+        private readonly IShipRoleRepository<ShipRole> _shipRoleRepository;
         private readonly IMapper _mapper;
 
-        public ShipClassController(
-            IShipClassRepository<ShipClass> shipClassRepository,
+        public ShipRoleController(
+            IShipRoleRepository<ShipRole> shipRoleRepository,
             IMapper mapper
         )
         {
-            _shipClassRepository = shipClassRepository;
+            _shipRoleRepository = shipRoleRepository;
             _mapper = mapper;
         }
 
@@ -35,12 +35,12 @@ namespace starbase_nexus_api.Controllers.Constructions
         [HttpGet]
         [Route("")]
         [AllowAnonymous]
-        public async Task<ActionResult<PagedList<ViewShipClass>>> GetMultiple([FromQuery] SearchParameters parameters)
+        public async Task<ActionResult<PagedList<ViewShipRole>>> GetMultiple([FromQuery] SearchParameters parameters)
         {
-            PagedList<ShipClass> entities = await _shipClassRepository.GetMultiple(parameters);
+            PagedList<ShipRole> entities = await _shipRoleRepository.GetMultiple(parameters);
             SetPaginationHeaders(entities);
 
-            return Ok(_mapper.Map<IEnumerable<ViewShipClass>>(entities).ShapeData(parameters.Fields));
+            return Ok(_mapper.Map<IEnumerable<ViewShipRole>>(entities).ShapeData(parameters.Fields));
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace starbase_nexus_api.Controllers.Constructions
         [HttpGet]
         [Route("({ids})")]
         [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<ViewShipClass>>> GetMultiple(
+        public async Task<ActionResult<IEnumerable<ViewShipRole>>> GetMultiple(
             [FromRoute][ModelBinder(BinderType = typeof(ArrayModelBinder))] IEnumerable<Guid> ids,
             [FromQuery] ShapingParameters parameters
         )
@@ -57,9 +57,9 @@ namespace starbase_nexus_api.Controllers.Constructions
             if (ids == null)
                 return BadRequest();
 
-            IEnumerable<ShipClass> entities = await _shipClassRepository.GetMultiple(ids, parameters);
+            IEnumerable<ShipRole> entities = await _shipRoleRepository.GetMultiple(ids, parameters);
 
-            return Ok(_mapper.Map<IEnumerable<ViewShipClass>>(entities).ShapeData(parameters.Fields));
+            return Ok(_mapper.Map<IEnumerable<ViewShipRole>>(entities).ShapeData(parameters.Fields));
         }
 
         /// <summary>
@@ -68,13 +68,13 @@ namespace starbase_nexus_api.Controllers.Constructions
         [HttpGet]
         [Route("{id}")]
         [AllowAnonymous]
-        public async Task<ActionResult<ViewShipClass>> GetOne(Guid id, [FromQuery] string? fields)
+        public async Task<ActionResult<ViewShipRole>> GetOne(Guid id, [FromQuery] string? fields)
         {
-            ShipClass? entity = await _shipClassRepository.GetOneOrDefault(id);
+            ShipRole? entity = await _shipRoleRepository.GetOneOrDefault(id);
             if (entity == null)
                 return NotFound();
 
-            return Ok(_mapper.Map<ViewShipClass>(entity).ShapeData(fields));
+            return Ok(_mapper.Map<ViewShipRole>(entity).ShapeData(fields));
         }
 
         /// <summary>
@@ -83,12 +83,12 @@ namespace starbase_nexus_api.Controllers.Constructions
         [HttpPost]
         [Route("")]
         [Authorize(Roles = RoleConstants.ADMIN_OR_MODERATOR)]
-        public async Task<ActionResult<ViewShipClass>> Create([FromBody] CreateShipClass createObj)
+        public async Task<ActionResult<ViewShipRole>> Create([FromBody] CreateShipRole createObj)
         {
-            ShipClass newEntity = _mapper.Map<ShipClass>(createObj);
-            newEntity = await _shipClassRepository.Create(newEntity);
+            ShipRole newEntity = _mapper.Map<ShipRole>(createObj);
+            newEntity = await _shipRoleRepository.Create(newEntity);
 
-            return Ok(_mapper.Map<ViewShipClass>(newEntity));
+            return Ok(_mapper.Map<ViewShipRole>(newEntity));
         }
 
         /// <summary>
@@ -97,14 +97,14 @@ namespace starbase_nexus_api.Controllers.Constructions
         [HttpPatch]
         [Route("{id}")]
         [Authorize(Roles = RoleConstants.ADMIN_OR_MODERATOR)]
-        public async Task<ActionResult<ViewShipClass>> Patch(Guid id, [FromBody] JsonPatchDocument<PatchShipClass> patchDocument)
+        public async Task<ActionResult<ViewShipRole>> Patch(Guid id, [FromBody] JsonPatchDocument<PatchShipRole> patchDocument)
         {
-            ShipClass? entity = await _shipClassRepository.GetOneOrDefault(id);
+            ShipRole? entity = await _shipRoleRepository.GetOneOrDefault(id);
 
             if (entity == null)
                 return NotFound();
 
-            PatchShipClass patchObj = _mapper.Map<PatchShipClass>(entity);
+            PatchShipRole patchObj = _mapper.Map<PatchShipRole>(entity);
 
             patchDocument.ApplyTo(patchObj, ModelState);
 
@@ -114,9 +114,9 @@ namespace starbase_nexus_api.Controllers.Constructions
             }
 
             _mapper.Map(patchObj, entity);
-            await _shipClassRepository.Update(entity);
+            await _shipRoleRepository.Update(entity);
 
-            return Ok(_mapper.Map<ViewShipClass>(entity));
+            return Ok(_mapper.Map<ViewShipRole>(entity));
         }
 
         /// <summary>
@@ -127,12 +127,12 @@ namespace starbase_nexus_api.Controllers.Constructions
         [Authorize(Roles = RoleConstants.ADMINISTRATOR)]
         public async Task<ActionResult> Delete(Guid id)
         {
-            ShipClass? entity = await _shipClassRepository.GetOneOrDefault(id);
+            ShipRole? entity = await _shipRoleRepository.GetOneOrDefault(id);
 
             if (entity == null)
                 return NotFound();
 
-            await _shipClassRepository.Delete(entity);
+            await _shipRoleRepository.Delete(entity);
 
             return Ok();
         }

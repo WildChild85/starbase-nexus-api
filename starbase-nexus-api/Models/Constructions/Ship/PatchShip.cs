@@ -1,5 +1,6 @@
 ﻿using starbase_nexus_api.Constants;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace starbase_nexus_api.Models.Constructions.Ship
@@ -7,8 +8,6 @@ namespace starbase_nexus_api.Models.Constructions.Ship
     public class PatchShip
     {
         public Guid? CompanyId { get; set; }
-
-        public Guid ShipClassId { get; set; }
 
         public Guid? ArmorMaterialId { get; set; }
 
@@ -113,5 +112,7 @@ namespace starbase_nexus_api.Models.Constructions.Ship
         public int? TurretWeaponsMissileLauncher { get; set; }
 
         public int? TurretWeaponsTorpedoLauncher { get; set; }
+
+        public List<Guid> ShipRoleIds { get; set; } = new List<Guid>();
     }
 }

@@ -175,7 +175,8 @@ namespace starbase_nexus_api
             services.AddScoped<IShipShopSpotRepository<ShipShopSpot>, ShipShopSpotRepository>();
             services.AddScoped<IRatingRepository<Rating>, RatingRepository>();
             services.AddScoped<IShipRepository<Ship>, ShipRepository>();
-            services.AddScoped<IShipClassRepository<ShipClass>, ShipClassRepository>();
+            services.AddScoped<IShipRoleRepository<ShipRole>, ShipRoleRepository>();
+            services.AddScoped<IShipRoleReferenceRepository<ShipRoleReference>, ShipRoleReferenceRepository>();
             services.AddScoped<IShipMaterialCostRepository<ShipMaterialCost>, ShipMaterialCostRepository>();
 
             // services

@@ -3,6 +3,7 @@ using starbase_nexus_api.Entities.Identity;
 using starbase_nexus_api.Entities.InGame;
 using starbase_nexus_api.Entities.Social;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -18,12 +19,6 @@ namespace starbase_nexus_api.Entities.Constructions
         [MaxLength(InputSizes.GUID_MAX_LENGTH)]
         public string? CreatorId { get; set; }
         public virtual User? Creator { get; set; }
-
-        [Required]
-        [ForeignKey("ShipClassId")]
-        public Guid ShipClassId { get; set; }
-        [Required]
-        public virtual ShipClass ShipClass { get; set; }
 
         [ForeignKey("ArmorMaterialId")]
         public Guid? ArmorMaterialId { get; set; }
@@ -133,5 +128,8 @@ namespace starbase_nexus_api.Entities.Constructions
         public int? TurretWeaponsMissileLauncher { get; set; }
 
         public int? TurretWeaponsTorpedoLauncher { get; set; }
+
+        [InverseProperty("Ship")]
+        public virtual ICollection<ShipRoleReference> ShipRoles { get; set; }
     }
 }

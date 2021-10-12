@@ -1,4 +1,6 @@
-﻿using System;
+﻿using starbase_nexus_api.Models.Constructions.ShipRoleReference;
+using System;
+using System.Collections.Generic;
 
 namespace starbase_nexus_api.Models.Constructions.Ship
 {
@@ -101,5 +103,7 @@ namespace starbase_nexus_api.Models.Constructions.Ship
         public int? TurretWeaponsMissileLauncher { get; set; }
 
         public int? TurretWeaponsTorpedoLauncher { get; set; }
+
+        public virtual ICollection<ViewShipRoleReference> ShipRoles { get; set; }
     }
 }

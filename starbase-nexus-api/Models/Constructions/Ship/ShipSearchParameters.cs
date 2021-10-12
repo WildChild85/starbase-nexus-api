@@ -8,9 +8,9 @@ namespace starbase_nexus_api.Models.Constructions.Ship
 
         public string? CreatorIds { get; set; }
 
-        public string? ShipClassIds { get; set; }
-
         public string? ArmorMaterialIds { get; set; }
+
+        public string? ShipRoleIds { get; set; }
 
         public int? MinOreCrates { get; set; }
         public int? MaxOreCrates { get; set; }

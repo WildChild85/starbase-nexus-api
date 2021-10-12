@@ -26,7 +26,8 @@ namespace starbase_nexus_api.DbContexts
         public DbSet<RefreshToken> Authentication_RefreshTokens { get; set; }
 
         public DbSet<Ship> Constructions_Ships { get; set; }
-        public DbSet<ShipClass> Constructions_ShipClasses { get; set; }
+        public DbSet<ShipRole> Constructions_ShipRoles { get; set; }
+        public DbSet<ShipRoleReference> Constructions_ShipRoleReference { get; set; }
         public DbSet<ShipMaterialCost> Constructions_ShipMaterialCosts { get; set; }
 
         public DbSet<MaterialCategory> InGame_MaterialCategories { get; set; }

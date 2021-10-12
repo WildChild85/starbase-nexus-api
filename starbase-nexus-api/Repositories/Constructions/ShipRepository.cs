@@ -40,21 +40,21 @@ namespace starbase_nexus_api.Repositories.Constructions
                 }
             }
 
-            if (parameters.ShipClassIds != null)
-            {
-                List<Guid> shipClassIds = TextService.GetGuidArray(parameters.ShipClassIds, ',').ToList();
-                if (shipClassIds.Count > 0)
-                {
-                    collection = collection.Where(r => shipClassIds.Contains((Guid)r.ShipClassId));
-                }
-            }
-
             if (parameters.ArmorMaterialIds != null)
             {
                 List<Guid> armorMaterialIds = TextService.GetGuidArray(parameters.ArmorMaterialIds, ',').ToList();
                 if (armorMaterialIds.Count > 0)
                 {
                     collection = collection.Where(r => r.ArmorMaterialId != null && armorMaterialIds.Contains((Guid)r.ArmorMaterialId));
+                }
+            }
+
+            if (parameters.ShipRoleIds != null)
+            {
+                List<Guid> shipRoleIds = TextService.GetGuidArray(parameters.ShipRoleIds, ',').ToList();
+                if (shipRoleIds.Count > 0)
+                {
+                    collection = collection.Where(r => r.ShipRoles.Where(sr => shipRoleIds.Contains(sr.ShipRoleId)).Count() > 0);
                 }
             }
 
