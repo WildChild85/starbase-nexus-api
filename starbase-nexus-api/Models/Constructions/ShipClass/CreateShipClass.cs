@@ -1,9 +1,9 @@
 ﻿using starbase_nexus_api.Constants;
 using System.ComponentModel.DataAnnotations;
 
-namespace starbase_nexus_api.Entities.Contructions
+namespace starbase_nexus_api.Models.Constructions.ShipClass
 {
-    public class ShipClass : UuidBaseEntity
+    public class CreateShipClass
     {
         [Required]
         [MinLength(InputSizes.DEFAULT_TEXT_MIN_LENGTH)]

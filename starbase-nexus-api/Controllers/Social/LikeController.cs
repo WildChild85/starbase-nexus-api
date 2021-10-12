@@ -58,7 +58,7 @@ namespace starbase_nexus_api.Controllers.Social
 
             IEnumerable<Like> entities = await _likeRepository.GetMultiple(ids, parameters);
 
-            return Ok(_mapper.Map<IEnumerable<Like>>(entities).ShapeData(parameters.Fields));
+            return Ok(_mapper.Map<IEnumerable<ViewLike>>(entities).ShapeData(parameters.Fields));
         }
 
         /// <summary>

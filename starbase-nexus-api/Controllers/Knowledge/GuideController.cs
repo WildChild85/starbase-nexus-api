@@ -59,7 +59,7 @@ namespace starbase_nexus_api.Controllers.Knowledge
 
             IEnumerable<Guide> entities = await _guideRepository.GetMultiple(ids, parameters);
 
-            return Ok(_mapper.Map<IEnumerable<Guide>>(entities).ShapeData(parameters.Fields));
+            return Ok(_mapper.Map<IEnumerable<ViewGuide>>(entities).ShapeData(parameters.Fields));
         }
 
         /// <summary>

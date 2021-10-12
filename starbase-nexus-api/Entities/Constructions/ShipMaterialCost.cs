@@ -3,7 +3,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace starbase_nexus_api.Entities.Contructions
+namespace starbase_nexus_api.Entities.Constructions
 {
     public class ShipMaterialCost : UuidBaseEntity
     {

@@ -153,6 +153,226 @@ namespace starbase_nexus_api.Migrations
                     b.ToTable("Authentication_RefreshTokens");
                 });
 
+            modelBuilder.Entity("starbase_nexus_api.Entities.Constructions.Ship", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid?>("ArmorMaterialId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<int?>("BackwardThrustPower")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Batteries")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("CompanyId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("CreatorId")
+                        .HasMaxLength(36)
+                        .HasColumnType("varchar(36)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(50000)
+                        .HasColumnType("longtext");
+
+                    b.Property<int?>("FlightTime")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ForwardThrustPower")
+                        .HasColumnType("int");
+
+                    b.Property<float?>("GeneratedPower")
+                        .HasColumnType("float");
+
+                    b.Property<float?>("Height")
+                        .HasColumnType("float");
+
+                    b.Property<string>("ImageUris")
+                        .HasMaxLength(50000)
+                        .HasColumnType("longtext");
+
+                    b.Property<float?>("Length")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("MiningLasers")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<uint?>("OldId")
+                        .HasColumnType("int unsigned");
+
+                    b.Property<int?>("OreCollectors")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("OreCrates")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PreviewImageUri")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<double?>("PriceBlueprint")
+                        .HasColumnType("double");
+
+                    b.Property<double?>("PriceShip")
+                        .HasColumnType("double");
+
+                    b.Property<int?>("PrimaryWeaponsAutoCannons")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PrimaryWeaponsLaserCannons")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PrimaryWeaponsMissileLauncher")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PrimaryWeaponsPlasmaCannons")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PrimaryWeaponsRailCannons")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PrimaryWeaponsTorpedoLauncher")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PropellantCapacity")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Radiators")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ResourceBridges")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("ShipClassId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<int?>("SpeedWithCargo")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SpeedWithoutCargo")
+                        .HasColumnType("int");
+
+                    b.Property<float?>("TotalMassWithoutCargo")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("TurretWeaponsAutoCannons")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TurretWeaponsLaserCannons")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TurretWeaponsMissileLauncher")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TurretWeaponsPlasmaCannons")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TurretWeaponsRailCannons")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TurretWeaponsTorpedoLauncher")
+                        .HasColumnType("int");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<float?>("Width")
+                        .HasColumnType("float");
+
+                    b.Property<string>("YoutubeVideoUri")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArmorMaterialId");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("CreatorId");
+
+                    b.HasIndex("ShipClassId");
+
+                    b.ToTable("Constructions_Ships");
+                });
+
+            modelBuilder.Entity("starbase_nexus_api.Entities.Constructions.ShipClass", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(50000)
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<uint?>("OldId")
+                        .HasColumnType("int unsigned");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Constructions_ShipClasses");
+                });
+
+            modelBuilder.Entity("starbase_nexus_api.Entities.Constructions.ShipMaterialCost", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid>("MaterialId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<uint?>("OldId")
+                        .HasColumnType("int unsigned");
+
+                    b.Property<Guid>("ShipId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<float>("Voxels")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MaterialId");
+
+                    b.HasIndex("ShipId");
+
+                    b.ToTable("Constructions_ShipMaterialCosts");
+                });
+
             modelBuilder.Entity("starbase_nexus_api.Entities.Identity.Role", b =>
                 {
                     b.Property<string>("Id")
@@ -207,6 +427,9 @@ namespace starbase_nexus_api.Migrations
 
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<string>("DiscordDiscriminator")
+                        .HasColumnType("longtext");
 
                     b.Property<string>("DiscordId")
                         .HasColumnType("varchar(255)");
@@ -567,6 +790,106 @@ namespace starbase_nexus_api.Migrations
                     b.ToTable("InGame_MaterialCategories");
                 });
 
+            modelBuilder.Entity("starbase_nexus_api.Entities.InGame.ShipShop", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<int?>("Height")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImageUri")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("Layout")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<int?>("Left")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<uint?>("OldId")
+                        .HasColumnType("int unsigned");
+
+                    b.Property<int?>("Top")
+                        .HasColumnType("int");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int?>("Width")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("InGame_ShipShops");
+                });
+
+            modelBuilder.Entity("starbase_nexus_api.Entities.InGame.ShipShopSpot", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int?>("Height")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Left")
+                        .HasColumnType("int");
+
+                    b.Property<uint?>("OldId")
+                        .HasColumnType("int unsigned");
+
+                    b.Property<int>("Position")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("ShipId")
+                        .IsRequired()
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("ShipShopId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<int>("Size")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Top")
+                        .HasColumnType("int");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int?>("Width")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ShipId");
+
+                    b.HasIndex("ShipShopId");
+
+                    b.ToTable("InGame_ShipShopSpots");
+                });
+
             modelBuilder.Entity("starbase_nexus_api.Entities.Knowledge.Guide", b =>
                 {
                     b.Property<Guid>("Id")
@@ -698,6 +1021,45 @@ namespace starbase_nexus_api.Migrations
                     b.HasIndex("YololProjectId");
 
                     b.ToTable("Social_Likes");
+                });
+
+            modelBuilder.Entity("starbase_nexus_api.Entities.Social.Rating", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Comment")
+                        .HasMaxLength(50000)
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<uint?>("OldId")
+                        .HasColumnType("int unsigned");
+
+                    b.Property<Guid>("ShipId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<uint>("Stars")
+                        .HasColumnType("int unsigned");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(36)
+                        .HasColumnType("varchar(36)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ShipId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Social_Ratings");
                 });
 
             modelBuilder.Entity("starbase_nexus_api.Entities.Yolol.YololProject", b =>
@@ -837,6 +1199,57 @@ namespace starbase_nexus_api.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("starbase_nexus_api.Entities.Constructions.Ship", b =>
+                {
+                    b.HasOne("starbase_nexus_api.Entities.InGame.Material", "ArmorMaterial")
+                        .WithMany()
+                        .HasForeignKey("ArmorMaterialId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("starbase_nexus_api.Entities.Social.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("starbase_nexus_api.Entities.Identity.User", "Creator")
+                        .WithMany()
+                        .HasForeignKey("CreatorId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("starbase_nexus_api.Entities.Constructions.ShipClass", "ShipClass")
+                        .WithMany()
+                        .HasForeignKey("ShipClassId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ArmorMaterial");
+
+                    b.Navigation("Company");
+
+                    b.Navigation("Creator");
+
+                    b.Navigation("ShipClass");
+                });
+
+            modelBuilder.Entity("starbase_nexus_api.Entities.Constructions.ShipMaterialCost", b =>
+                {
+                    b.HasOne("starbase_nexus_api.Entities.InGame.Material", "Material")
+                        .WithMany()
+                        .HasForeignKey("MaterialId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("starbase_nexus_api.Entities.Constructions.Ship", "Ship")
+                        .WithMany()
+                        .HasForeignKey("ShipId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Material");
+
+                    b.Navigation("Ship");
+                });
+
             modelBuilder.Entity("starbase_nexus_api.Entities.InGame.Item", b =>
                 {
                     b.HasOne("starbase_nexus_api.Entities.InGame.ItemCategory", "ItemCategory")
@@ -874,6 +1287,25 @@ namespace starbase_nexus_api.Migrations
                         .IsRequired();
 
                     b.Navigation("MaterialCategory");
+                });
+
+            modelBuilder.Entity("starbase_nexus_api.Entities.InGame.ShipShopSpot", b =>
+                {
+                    b.HasOne("starbase_nexus_api.Entities.Constructions.Ship", "Ship")
+                        .WithMany()
+                        .HasForeignKey("ShipId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("starbase_nexus_api.Entities.InGame.ShipShop", "ShipShop")
+                        .WithMany()
+                        .HasForeignKey("ShipShopId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Ship");
+
+                    b.Navigation("ShipShop");
                 });
 
             modelBuilder.Entity("starbase_nexus_api.Entities.Knowledge.Guide", b =>
@@ -920,6 +1352,25 @@ namespace starbase_nexus_api.Migrations
                     b.Navigation("User");
 
                     b.Navigation("YololProject");
+                });
+
+            modelBuilder.Entity("starbase_nexus_api.Entities.Social.Rating", b =>
+                {
+                    b.HasOne("starbase_nexus_api.Entities.Constructions.Ship", "Ship")
+                        .WithMany()
+                        .HasForeignKey("ShipId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("starbase_nexus_api.Entities.Identity.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Ship");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("starbase_nexus_api.Entities.Yolol.YololProject", b =>

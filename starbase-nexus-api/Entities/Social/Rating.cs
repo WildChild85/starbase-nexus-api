@@ -1,5 +1,5 @@
 ﻿using starbase_nexus_api.Constants;
-using starbase_nexus_api.Entities.Contructions;
+using starbase_nexus_api.Entities.Constructions;
 using starbase_nexus_api.Entities.Identity;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -17,7 +17,7 @@ namespace starbase_nexus_api.Entities.Social
         [ForeignKey("ShipId")]
         public Guid ShipId { get; set; }
         [Required]
-        public Ship Ship { get; set; }
+        public virtual Ship Ship { get; set; }
 
         [Required]
         [MaxLength(InputSizes.GUID_MAX_LENGTH)]

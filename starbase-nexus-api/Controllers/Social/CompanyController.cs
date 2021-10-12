@@ -59,7 +59,7 @@ namespace starbase_nexus_api.Controllers.Social
 
             IEnumerable<Company> entities = await _companyRepository.GetMultiple(ids, parameters);
 
-            return Ok(_mapper.Map<IEnumerable<Company>>(entities).ShapeData(parameters.Fields));
+            return Ok(_mapper.Map<IEnumerable<ViewCompany>>(entities).ShapeData(parameters.Fields));
         }
 
         /// <summary>

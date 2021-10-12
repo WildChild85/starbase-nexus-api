@@ -12,6 +12,7 @@ using starbase_nexus_api.Entities.InGame;
 using starbase_nexus_api.Entities.Yolol;
 using starbase_nexus_api.Entities.Social;
 using starbase_nexus_api.Entities.Knowledge;
+using starbase_nexus_api.Entities.Constructions;
 
 namespace starbase_nexus_api.DbContexts
 {
@@ -24,15 +25,24 @@ namespace starbase_nexus_api.DbContexts
 
         public DbSet<RefreshToken> Authentication_RefreshTokens { get; set; }
 
+        public DbSet<Ship> Constructions_Ships { get; set; }
+        public DbSet<ShipClass> Constructions_ShipClasses { get; set; }
+        public DbSet<ShipMaterialCost> Constructions_ShipMaterialCosts { get; set; }
+
         public DbSet<MaterialCategory> InGame_MaterialCategories { get; set; }
         public DbSet<Material> InGame_Materials { get; set; }
         public DbSet<ItemCategory> InGame_ItemCategories { get; set; }
         public DbSet<Item> InGame_Items { get; set; }
+        public DbSet<ShipShop> InGame_ShipShops { get; set; }
+        public DbSet<ShipShopSpot> InGame_ShipShopSpots{ get; set; }
+
         public DbSet<YololProject> Yolol_YololProjects { get; set; }
         public DbSet<YololScript> Yolol_YololScripts { get; set; }
 
         public DbSet<Like> Social_Likes { get; set; }
         public DbSet<Company> Social_Companies { get; set; }
+        public DbSet<Rating> Social_Ratings { get; set; }
+
         public DbSet<Guide> Knowledge_Guides { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

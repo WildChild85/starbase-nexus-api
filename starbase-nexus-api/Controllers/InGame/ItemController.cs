@@ -59,7 +59,7 @@ namespace starbase_nexus_api.Controllers.InGame
 
             IEnumerable<Item> entities = await _itemRepository.GetMultiple(ids, parameters);
 
-            return Ok(_mapper.Map<IEnumerable<Item>>(entities).ShapeData(parameters.Fields));
+            return Ok(_mapper.Map<IEnumerable<ViewItem>>(entities).ShapeData(parameters.Fields));
         }
 
         /// <summary>

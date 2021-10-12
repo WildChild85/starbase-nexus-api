@@ -16,6 +16,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using starbase_nexus_api.DbContexts;
+using starbase_nexus_api.Entities.Constructions;
 using starbase_nexus_api.Entities.Identity;
 using starbase_nexus_api.Entities.InGame;
 using starbase_nexus_api.Entities.Knowledge;
@@ -28,6 +29,7 @@ using starbase_nexus_api.Models.Authentication.Discord;
 using starbase_nexus_api.Models.Cdn;
 using starbase_nexus_api.Models.Pwa;
 using starbase_nexus_api.Repositories.Authentication;
+using starbase_nexus_api.Repositories.Constructions;
 using starbase_nexus_api.Repositories.Identity;
 using starbase_nexus_api.Repositories.InGame;
 using starbase_nexus_api.Repositories.Knowledge;
@@ -169,6 +171,12 @@ namespace starbase_nexus_api
             services.AddScoped<ILikeRepository<Like>, LikeRepository>();
             services.AddScoped<ICompanyRepository<Company>, CompanyRepository>();
             services.AddScoped<IGuideRepository<Guide>, GuideRepository>();
+            services.AddScoped<IShipShopRepository<ShipShop>, ShipShopRepository>();
+            services.AddScoped<IShipShopSpotRepository<ShipShopSpot>, ShipShopSpotRepository>();
+            services.AddScoped<IRatingRepository<Rating>, RatingRepository>();
+            services.AddScoped<IShipRepository<Ship>, ShipRepository>();
+            services.AddScoped<IShipClassRepository<ShipClass>, ShipClassRepository>();
+            services.AddScoped<IShipMaterialCostRepository<ShipMaterialCost>, ShipMaterialCostRepository>();
 
             // services
             services.AddScoped<IAccessTokenService, AccessTokenService>();

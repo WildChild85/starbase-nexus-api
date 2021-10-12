@@ -33,10 +33,10 @@ namespace starbase_nexus_api.Repositories.InGame
 
             if (parameters.MaterialCategoryIds != null)
             {
-                List<Guid> offerIds = TextService.GetGuidArray(parameters.MaterialCategoryIds, ',').ToList();
-                if (offerIds.Count > 0)
+                List<Guid> materialIds = TextService.GetGuidArray(parameters.MaterialCategoryIds, ',').ToList();
+                if (materialIds.Count > 0)
                 {
-                    collection = collection.Where(r => offerIds.Contains(r.MaterialCategoryId));
+                    collection = collection.Where(r => materialIds.Contains(r.MaterialCategoryId));
                 }
             }
 

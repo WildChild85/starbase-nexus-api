@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,37 +9,22 @@ namespace starbase_nexus_api.Hubs
 {
     public class ViewsHub : Hub
     {
-        public static Dictionary<string, DateTimeOffset> _views = new Dictionary<string, DateTimeOffset>();
+        public static HashSet<string> ConnectedIds = new HashSet<string>();
 
         public async Task NotifyWatching()
         {
-            DateTimeOffset now = DateTimeOffset.UtcNow;
-            List<string> toRemove = new List<string>();
-            foreach (KeyValuePair<string, DateTimeOffset> view in _views)
-            {
-                var age = now.Subtract(view.Value);
-                if (age.TotalMinutes > 5)
-                {
-                    toRemove.Add(view.Key);
-                }
-            }
-            foreach(string key in toRemove)
-            {
-                _views.Remove(key);
-            }
+            await Clients.All.SendAsync("viewCountUpdate", ConnectedIds.Count());
+        }
+        public override Task OnConnectedAsync()
+        {
+            ConnectedIds.Add(Context.ConnectionId);
+            return base.OnConnectedAsync();
+        }
 
-            //string ip = Context.Connection.RemoteIpAddress.ToString();
-            string ip = Context.GetHttpContext().Connection.RemoteIpAddress.ToString();
-            if (_views.Keys.Contains(ip))
-            {
-                _views[ip] = now;
-            }
-            else
-            {
-                _views.Add(ip, now);
-            }
-
-            await Clients.All.SendAsync("viewCountUpdate", _views.Count());
+        public override Task OnDisconnectedAsync(Exception exception)
+        {
+            ConnectedIds.Remove(Context.ConnectionId);
+            return base.OnDisconnectedAsync(exception);
         }
     }
 }

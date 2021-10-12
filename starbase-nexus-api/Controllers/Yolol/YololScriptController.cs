@@ -62,7 +62,7 @@ namespace starbase_nexus_api.Controllers.InGame
 
             IEnumerable<YololScript> entities = await _yololScriptRepository.GetMultiple(ids, parameters);
 
-            return Ok(_mapper.Map<IEnumerable<YololScript>>(entities).ShapeData(parameters.Fields));
+            return Ok(_mapper.Map<IEnumerable<ViewYololScript>>(entities).ShapeData(parameters.Fields));
         }
 
         /// <summary>
