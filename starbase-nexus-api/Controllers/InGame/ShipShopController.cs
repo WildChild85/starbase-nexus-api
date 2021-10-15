@@ -96,13 +96,24 @@ namespace starbase_nexus_api.Controllers.InGame
         /// </summary>
         [HttpPatch]
         [Route("{id}")]
-        [Authorize(Roles = RoleConstants.ADMIN_OR_MODERATOR)]
         public async Task<ActionResult<ViewShipShop>> Patch(Guid id, [FromBody] JsonPatchDocument<PatchShipShop> patchDocument)
         {
+            string? currentUserId = GetCurrentUserId();
+            if (currentUserId == null)
+                return Unauthorized();
+
             ShipShop? entity = await _shipShopRepository.GetOneOrDefault(id);
 
             if (entity == null)
                 return NotFound();
+
+            if (!CurrentUserHasRole(RoleConstants.ADMINISTRATOR) && !CurrentUserHasRole(RoleConstants.MODERATOR))
+            {
+                if (entity.ModeratorId != currentUserId)
+                {
+                    return Forbid();
+                }
+            }
 
             PatchShipShop patchObj = _mapper.Map<PatchShipShop>(entity);
 

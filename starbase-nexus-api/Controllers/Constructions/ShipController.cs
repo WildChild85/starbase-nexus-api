@@ -4,11 +4,14 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using starbase_nexus_api.Constants.Identity;
 using starbase_nexus_api.Entities.Constructions;
+using starbase_nexus_api.Entities.InGame;
 using starbase_nexus_api.Helpers;
 using starbase_nexus_api.Models.Api;
 using starbase_nexus_api.Models.Constructions.Ship;
 using starbase_nexus_api.Models.Constructions.ShipRoleReference;
+using starbase_nexus_api.Models.InGame.ShipShopSpot;
 using starbase_nexus_api.Repositories.Constructions;
+using starbase_nexus_api.Repositories.InGame;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,16 +24,19 @@ namespace starbase_nexus_api.Controllers.Social
     {
         private readonly IShipRepository<Ship> _shipRepository;
         private readonly IShipRoleReferenceRepository<ShipRoleReference> _shipRoleReferenceRepository;
+        private readonly IShipShopSpotRepository<ShipShopSpot> _shipShopSpotRepository;
         private readonly IMapper _mapper;
 
         public ShipController(
             IShipRepository<Ship> shipRepository,
             IShipRoleReferenceRepository<ShipRoleReference> shipRoleReferenceRepository,
+            IShipShopSpotRepository<ShipShopSpot> shipShopSpotRepository,
             IMapper mapper
         )
         {
             _shipRepository = shipRepository;
             _shipRoleReferenceRepository = shipRoleReferenceRepository;
+            _shipShopSpotRepository = shipShopSpotRepository;
             _mapper = mapper;
         }
 
@@ -102,7 +108,7 @@ namespace starbase_nexus_api.Controllers.Social
 
             await PatchShipRoles(newEntity, createObj.ShipRoleIds);
 
-            return Ok(_mapper.Map<ViewShip>(newEntity));
+            return Ok(_mapper.Map<ViewShip>(await _shipRepository.GetOneOrDefault(newEntity.Id)));
         }
 
         /// <summary>
@@ -125,7 +131,17 @@ namespace starbase_nexus_api.Controllers.Social
             {
                 if (entity.CreatorId != currentUserId)
                 {
-                    return Forbid();
+                    PagedList<ShipShopSpot> spots = await _shipShopSpotRepository.GetMultiple(
+                        new ShipShopSpotSearchParameters
+                        {
+                            ShipIds = entity.Id.ToString(),
+                            PageSize = -1
+                        }
+                    );
+                    if (spots.Where(s => s.ShipShop.ModeratorId == currentUserId).Count() == 0)
+                    {
+                        return Forbid();
+                    }
                 }
             }
 
@@ -143,7 +159,7 @@ namespace starbase_nexus_api.Controllers.Social
 
             await PatchShipRoles(entity, patchObj.ShipRoleIds);
 
-            return Ok(_mapper.Map<ViewShip>(entity));
+            return Ok(_mapper.Map<ViewShip>(await _shipRepository.GetOneOrDefault(entity.Id)));
         }
 
         /// <summary>
@@ -210,13 +226,13 @@ namespace starbase_nexus_api.Controllers.Social
                     PageSize = -1
                 }
             );
-            var existingShipRoleIds = from reference in existing select reference.ShipRoleId;
+            IEnumerable<Guid> existingShipRoleIds = from reference in existing select reference.ShipRoleId;
 
-            IEnumerable<ShipRoleReference> toDelete = existing.Where(r => !shipRoleIds.Contains(r.Id));
+            IEnumerable<ShipRoleReference> toDelete = existing.Where(r => !shipRoleIds.Contains(r.ShipRoleId));
             IEnumerable<Guid> toCreateIds = shipRoleIds.Where(shipRoleId => !existingShipRoleIds.Contains(shipRoleId));
             List<ShipRoleReference> toCreate = new List<ShipRoleReference>();
 
-            foreach(var toCreateId in toCreateIds)
+            foreach (Guid toCreateId in toCreateIds)
             {
                 toCreate.Add(
                     new ShipRoleReference

@@ -9,9 +9,6 @@ namespace starbase_nexus_api.Models.Constructions.Ship
     {
         public Guid? CompanyId { get; set; }
 
-        [Required]
-        public Guid? ShipClassId { get; set; }
-
         public Guid? ArmorMaterialId { get; set; }
 
         [Required]
@@ -82,7 +79,7 @@ namespace starbase_nexus_api.Models.Constructions.Ship
         /// <summary>
         /// in minutes
         /// </summary>
-        public int? FlightTime { get; set; }
+        public float? FlightTime { get; set; }
 
         public float? TotalMassWithoutCargo { get; set; }
 

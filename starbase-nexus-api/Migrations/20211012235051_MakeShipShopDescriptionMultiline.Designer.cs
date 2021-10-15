@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using starbase_nexus_api.DbContexts;
 
 namespace starbase_nexus_api.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    partial class MainDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211012235051_MakeShipShopDescriptionMultiline")]
+    partial class MakeShipShopDescriptionMultiline
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -839,10 +841,6 @@ namespace starbase_nexus_api.Migrations
                     b.Property<int?>("Left")
                         .HasColumnType("int");
 
-                    b.Property<string>("ModeratorId")
-                        .HasMaxLength(36)
-                        .HasColumnType("varchar(36)");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -861,8 +859,6 @@ namespace starbase_nexus_api.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ModeratorId");
 
                     b.ToTable("InGame_ShipShops");
                 });
@@ -889,6 +885,7 @@ namespace starbase_nexus_api.Migrations
                         .HasColumnType("int");
 
                     b.Property<Guid?>("ShipId")
+                        .IsRequired()
                         .HasColumnType("char(36)");
 
                     b.Property<Guid>("ShipShopId")
@@ -1325,22 +1322,13 @@ namespace starbase_nexus_api.Migrations
                     b.Navigation("MaterialCategory");
                 });
 
-            modelBuilder.Entity("starbase_nexus_api.Entities.InGame.ShipShop", b =>
-                {
-                    b.HasOne("starbase_nexus_api.Entities.Identity.User", "Moderator")
-                        .WithMany()
-                        .HasForeignKey("ModeratorId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("Moderator");
-                });
-
             modelBuilder.Entity("starbase_nexus_api.Entities.InGame.ShipShopSpot", b =>
                 {
                     b.HasOne("starbase_nexus_api.Entities.Constructions.Ship", "Ship")
                         .WithMany()
                         .HasForeignKey("ShipId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("starbase_nexus_api.Entities.InGame.ShipShop", "ShipShop")
                         .WithMany()

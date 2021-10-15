@@ -5,6 +5,9 @@ namespace starbase_nexus_api.Models.InGame.ShipShop
 {
     public class CreateShipShop
     {
+        [MaxLength(InputSizes.GUID_MAX_LENGTH)]
+        public string? ModeratorId { get; set; }
+
         [Url]
         [MinLength(InputSizes.DEFAULT_TEXT_MIN_LENGTH)]
         [MaxLength(InputSizes.DEFAULT_TEXT_MAX_LENGTH)]
@@ -16,8 +19,8 @@ namespace starbase_nexus_api.Models.InGame.ShipShop
         public string Name { get; set; }
 
         [Required]
-        [MinLength(InputSizes.DEFAULT_TEXT_MIN_LENGTH)]
-        [MaxLength(InputSizes.DEFAULT_TEXT_MAX_LENGTH)]
+        [MinLength(InputSizes.MULTILINE_TEXT_MIN_LENGTH)]
+        [MaxLength(InputSizes.MULTILINE_TEXT_MAX_LENGTH)]
         public string Description { get; set; }
 
         [Required]

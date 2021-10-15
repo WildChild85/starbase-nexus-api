@@ -13,10 +13,8 @@ namespace starbase_nexus_api.Entities.InGame
         [Required]
         public virtual ShipShop ShipShop { get; set; }
 
-        [Required]
         [ForeignKey("ShipId")]
         public Guid? ShipId { get; set; }
-        [Required]
         public virtual Ship? Ship { get; set; }
 
         public int Position { get; set; }

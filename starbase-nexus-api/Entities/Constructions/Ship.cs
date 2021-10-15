@@ -92,7 +92,7 @@ namespace starbase_nexus_api.Entities.Constructions
         /// <summary>
         /// in minutes
         /// </summary>
-        public int? FlightTime { get; set; }
+        public float? FlightTime { get; set; }
 
         public float? TotalMassWithoutCargo { get; set; }
 

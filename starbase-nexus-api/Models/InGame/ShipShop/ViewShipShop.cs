@@ -2,6 +2,8 @@
 {
     public class ViewShipShop : UuidViewModel
     {
+        public string? ModeratorId { get; set; }
+
         public string? ImageUri { get; set; }
 
         public string Name { get; set; }

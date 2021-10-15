@@ -18,14 +18,17 @@ namespace starbase_nexus_api.Controllers.InGame
     public class ShipShopSpotController : DefaultControllerTemplate
     {
         private readonly IShipShopSpotRepository<ShipShopSpot> _shipShopSpotRepository;
+        private readonly IShipShopRepository<ShipShop> _shipShopRepository;
         private readonly IMapper _mapper;
 
         public ShipShopSpotController(
             IShipShopSpotRepository<ShipShopSpot> shipShopSpotRepository,
+            IShipShopRepository<ShipShop> shipShopRepository,
             IMapper mapper
         )
         {
             _shipShopSpotRepository = shipShopSpotRepository;
+            _shipShopRepository = shipShopRepository;
             _mapper = mapper;
         }
 
@@ -35,7 +38,7 @@ namespace starbase_nexus_api.Controllers.InGame
         [HttpGet]
         [Route("")]
         [AllowAnonymous]
-        public async Task<ActionResult<PagedList<ViewShipShopSpot>>> GetMultiple([FromQuery] SearchParameters parameters)
+        public async Task<ActionResult<PagedList<ViewShipShopSpot>>> GetMultiple([FromQuery] ShipShopSpotSearchParameters parameters)
         {
             PagedList<ShipShopSpot> entities = await _shipShopSpotRepository.GetMultiple(parameters);
             SetPaginationHeaders(entities);
@@ -82,10 +85,25 @@ namespace starbase_nexus_api.Controllers.InGame
         /// </summary>
         [HttpPost]
         [Route("")]
-        [Authorize(Roles = RoleConstants.ADMIN_OR_MODERATOR)]
         public async Task<ActionResult<ViewShipShopSpot>> Create([FromBody] CreateShipShopSpot createObj)
         {
-            var conflicts = await _shipShopSpotRepository.GetMultiple(new ShipShopSpotSearchParameters
+            string? currentUserId = GetCurrentUserId();
+            if (currentUserId == null)
+                return Unauthorized();
+
+            ShipShop shipShop = await _shipShopRepository.GetOneOrDefault((Guid)createObj.ShipShopId);
+            if (shipShop == null)
+                return BadRequest();
+
+            if (!CurrentUserHasRole(RoleConstants.ADMINISTRATOR) && !CurrentUserHasRole(RoleConstants.MODERATOR))
+            {
+                if (shipShop.ModeratorId != currentUserId)
+                {
+                    return Forbid();
+                }
+            }
+
+            PagedList<ShipShopSpot> conflicts = await _shipShopSpotRepository.GetMultiple(new ShipShopSpotSearchParameters
             {
                 Position = createObj.Position,
                 ShipShopIds = createObj.ShipShopId.ToString(),
@@ -109,10 +127,22 @@ namespace starbase_nexus_api.Controllers.InGame
         [Authorize(Roles = RoleConstants.ADMIN_OR_MODERATOR)]
         public async Task<ActionResult<ViewShipShopSpot>> Patch(Guid id, [FromBody] JsonPatchDocument<PatchShipShopSpot> patchDocument)
         {
+            string? currentUserId = GetCurrentUserId();
+            if (currentUserId == null)
+                return Unauthorized();
+
             ShipShopSpot? entity = await _shipShopSpotRepository.GetOneOrDefault(id);
 
             if (entity == null)
                 return NotFound();
+
+            if (!CurrentUserHasRole(RoleConstants.ADMINISTRATOR) && !CurrentUserHasRole(RoleConstants.MODERATOR))
+            {
+                if (entity.ShipShop.ModeratorId != currentUserId)
+                {
+                    return Forbid();
+                }
+            }
 
             PatchShipShopSpot patchObj = _mapper.Map<PatchShipShopSpot>(entity);
 

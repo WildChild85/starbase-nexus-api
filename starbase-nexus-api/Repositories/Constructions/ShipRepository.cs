@@ -22,6 +22,15 @@ namespace starbase_nexus_api.Repositories.Constructions
         {
             IQueryable<Ship> collection = _dbSet as IQueryable<Ship>;
 
+            if (parameters.SearchQuery != null && parameters.SearchQuery.Length >= InputSizes.DEFAULT_TEXT_MIN_LENGTH)
+            {
+                collection = collection.Where(r =>
+                    r.Name.Contains(parameters.SearchQuery)
+                    ||
+                    r.Description.Contains(parameters.SearchQuery)
+                );
+            }
+
             if (parameters.CreatorIds != null)
             {
                 List<string> creatorIds = parameters.CreatorIds.Split(',').ToList();
