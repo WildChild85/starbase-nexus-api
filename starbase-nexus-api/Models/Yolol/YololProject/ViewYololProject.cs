@@ -4,7 +4,9 @@
     {
         public string Name { get; set; }
 
-        public string Documentation { get; set; }
+        public string? Documentation { get; set; }
+
+        public string? FetchConfigUri { get; set; }
 
         public string CreatorId { get; set; }
 

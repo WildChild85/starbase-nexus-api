@@ -12,10 +12,13 @@ namespace starbase_nexus_api.Entities.Yolol
         [MaxLength(InputSizes.DEFAULT_TEXT_MAX_LENGTH)]
         public string Name { get; set; }
 
-        [Required]
         [MinLength(InputSizes.MULTILINE_TEXT_MIN_LENGTH)]
         [MaxLength(InputSizes.MULTILINE_TEXT_MAX_LENGTH)]
-        public string Documentation { get; set; }
+        public string? Documentation { get; set; }
+
+        [MinLength(InputSizes.DEFAULT_TEXT_MIN_LENGTH)]
+        [MaxLength(InputSizes.DEFAULT_TEXT_MAX_LENGTH)]
+        public string? FetchConfigUri { get; set; }
 
         [Required]
         [ForeignKey("CreatorId")]

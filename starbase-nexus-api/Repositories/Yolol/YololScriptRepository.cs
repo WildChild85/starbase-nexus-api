@@ -1,4 +1,5 @@
-﻿using starbase_nexus_api.DbContexts;
+﻿using starbase_nexus_api.Constants;
+using starbase_nexus_api.DbContexts;
 using starbase_nexus_api.Entities.Yolol;
 using starbase_nexus_api.Helpers;
 using starbase_nexus_api.Models.Api;
@@ -28,6 +29,13 @@ namespace starbase_nexus_api.Repositories.Yolol
                 {
                     collection = collection.Where(r => projectIds.Contains(r.ProjectId));
                 }
+            }
+
+            if (parameters.SearchQuery != null && parameters.SearchQuery.Length >= InputSizes.DEFAULT_TEXT_MIN_LENGTH)
+            {
+                collection = collection.Where(r =>
+                    r.Name.Contains(parameters.SearchQuery)
+                );
             }
 
             collection = collection.ApplySort(parameters.OrderBy);

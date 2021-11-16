@@ -124,7 +124,6 @@ namespace starbase_nexus_api.Controllers.InGame
         /// </summary>
         [HttpPatch]
         [Route("{id}")]
-        [Authorize(Roles = RoleConstants.ADMIN_OR_MODERATOR)]
         public async Task<ActionResult<ViewShipShopSpot>> Patch(Guid id, [FromBody] JsonPatchDocument<PatchShipShopSpot> patchDocument)
         {
             string? currentUserId = GetCurrentUserId();

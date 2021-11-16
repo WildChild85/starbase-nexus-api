@@ -38,6 +38,7 @@ using starbase_nexus_api.Repositories.Yolol;
 using starbase_nexus_api.Services.Authentication;
 using starbase_nexus_api.Services.Cdn;
 using starbase_nexus_api.Services.Media;
+using starbase_nexus_api.Services.Yolol;
 using System;
 using System.IO;
 using System.Linq;
@@ -184,6 +185,7 @@ namespace starbase_nexus_api
             services.AddScoped<IDiscordService, DiscordService>();
             services.AddScoped<ICdnService, CdnService>();
             services.AddScoped<IImageService, ImageService>();
+            services.AddScoped<IFetchConfigService, FetchConfigService>();
 
 
             services.AddSwaggerGen(c =>

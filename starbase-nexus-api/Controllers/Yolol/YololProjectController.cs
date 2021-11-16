@@ -7,7 +7,10 @@ using starbase_nexus_api.Entities.Yolol;
 using starbase_nexus_api.Helpers;
 using starbase_nexus_api.Models.Api;
 using starbase_nexus_api.Models.Yolol.YololProject;
+using starbase_nexus_api.Models.Yolol.YololProject.FetchConfig;
+using starbase_nexus_api.Models.Yolol.YololProject.Fetched;
 using starbase_nexus_api.Repositories.Yolol;
+using starbase_nexus_api.Services.Yolol;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -18,14 +21,17 @@ namespace starbase_nexus_api.Controllers.InGame
     public class YololProjectController : DefaultControllerTemplate
     {
         private readonly IYololProjectRepository<YololProject> _yololProjectRepository;
+        private readonly IFetchConfigService _fetchConfigService;
         private readonly IMapper _mapper;
 
         public YololProjectController(
             IYololProjectRepository<YololProject> yololProjectRepository,
+            IFetchConfigService fetchConfigService,
             IMapper mapper
         )
         {
             _yololProjectRepository = yololProjectRepository;
+            _fetchConfigService = fetchConfigService;
             _mapper = mapper;
         }
 
@@ -161,6 +167,35 @@ namespace starbase_nexus_api.Controllers.InGame
             await _yololProjectRepository.Delete(entity);
 
             return Ok();
+        }
+
+        /// <summary>
+        /// Test a fetch config.
+        /// </summary>
+        [HttpPost]
+        [Route("test-fetch-config")]
+        public async Task<ActionResult<FetchConfigValidationResult>> TestFetchConfig([FromBody] FetchConfigRequest fetchConfigRequest)
+        {
+            return Ok(await _fetchConfigService.ValidateFetchConfig(fetchConfigRequest.FetchConfigUri));
+        }
+
+        /// <summary>
+        /// Load by fetch config.
+        /// </summary>
+        [HttpGet]
+        [Route("{id}/by-fetch-config")]
+        public async Task<ActionResult<FetchedYololProject>> ByFetchConfig(Guid id)
+        {
+            var yololProject = await _yololProjectRepository.GetOneOrDefault(id);
+
+            if (yololProject == null || yololProject.FetchConfigUri == null)
+                return BadRequest();
+
+            var result = await _fetchConfigService.ValidateFetchConfig(yololProject.FetchConfigUri);
+            if (result.Errors.Count > 0)
+                return BadRequest();
+
+            return Ok(await _fetchConfigService.LoadProjectByFetchConfig(result.FetchConfig));
         }
     }
 }
